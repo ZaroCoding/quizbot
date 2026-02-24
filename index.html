@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Bot</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .quiz-box {
+            width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .option {
+            display: block;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Welcome to the Quiz Bot!</h1>
+
+<div class="quiz-box">
+
+<h3 id="question"></h3>
+
+<div id="options"></div>
+
+<button onclick="nextQuestion()">Submit</button>
+
+<h3 id="result"></h3>
+
+</div>
+
+<script>
+
+let quiz = [
+
+{
+    ques: "What is my another name?",
+    options: [
+        "a) Chandni Aalam",
+        "b) Malvika Pandey",
+        "c) Chhoti Advance",
+        "d) Janeshar Akhtar"
+    ],
+    correctAns: "c"
+},
+
+{
+    ques: "What is my favourite colour?",
+    options: [
+        "a) Blue",
+        "b) Black",
+        "c) Red",
+        "d) the color of your eyes"
+    ],
+    correctAns: "d"
+},
+
+{
+    ques: "What do I want to be?",
+    options: [
+        "a) Engineer",
+        "b) Your Husband",
+        "c) A Business man",
+        "d) A writer"
+    ],
+    correctAns: "b"
+},
+
+{
+    ques: "Whom do I love the most in the world other than my family?",
+    options: [
+        "a) Cats",
+        "b) Dogs",
+        "c) My girlfriend",
+        "d) No one"
+    ],
+    correctAns: "c"
+},
+
+{
+    ques: "If we were alone together right now, what would we be doing?",
+    options: [
+        "a) Talking about random stuff",
+        "b) Watching something together",
+        "c) Holding hands quietly",
+        "d) Something that would make us both blush"
+    ],
+    correctAns: "d"
+},
+
+{
+    ques: "If I suddenly hugged you, what would you do?",
+    options: [
+        "a) Freeze",
+        "b) Hug back",
+        "c) Smile and pretend it's normal",
+        "d) Never let go"
+    ],
+    correctAns: "d"
+},
+
+{
+    ques: "If we had to sit close together, how close is best?",
+    options: [
+        "a) Normal distance",
+        "b) Shoulder touching",
+        "c) Very close",
+        "d) Crisscross, you on top of me, soul touching"
+    ],
+    correctAns: "d"
+},
+
+{
+    ques: "What makes you blush the most?",
+    options: [
+        "a) Compliments",
+        "b) Eye contact",
+        "c) When I tease you",
+        "d) When I get romantic"
+    ],
+    correctAns: "d"
+},
+
+{
+    ques: "When did I first start liking you?",
+    options: [
+        "a) The first time we talked",
+        "b) After getting to know me",
+        "c) I don't even know when it happened",
+        "d) When we first held hands together"
+    ],
+    correctAns: "d"
+},
+
+{
+    ques: "What do you think is my favorite thing about you?",
+    options: [
+        "a) Your smile",
+        "b) Your eyes",
+        "c) Your personality",
+        "d) Your asssssssssssssssssssss"
+    ],
+    correctAns: "d"
+},
+
+{
+    ques: "If there was anything you could change about me what that would be?",
+    options: [
+        "a) Being on time",
+        "b) Make me taller",
+        "c) Not being so dry to you in chat",
+        "d) Make me a girl"
+    ],
+    correctAns: "c"
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+loadQuestion();
+
+function loadQuestion() {
+
+    if(currentQuestion >= quiz.length) {
+
+        document.getElementById("question").innerHTML =
+            "Final Score: " + score + "/" + quiz.length;
+
+        document.getElementById("options").innerHTML = "";
+
+        document.querySelector("button").style.display = "none";
+
+        return;
+    }
+
+    document.getElementById("question").innerHTML =
+        "Question " + (currentQuestion+1) + ": " + quiz[currentQuestion].ques;
+
+    let optionsHTML = "";
+
+    for(let i=0;i<4;i++) {
+
+        let letter = String.fromCharCode(97+i);
+
+        optionsHTML +=
+        `<label class="option">
+        <input type="radio" name="option" value="${letter}">
+        ${quiz[currentQuestion].options[i]}
+        </label>`;
+    }
+
+    document.getElementById("options").innerHTML = optionsHTML;
+
+    document.getElementById("result").innerHTML = "";
+}
+
+
+function nextQuestion() {
+
+    let selected = document.querySelector('input[name="option"]:checked');
+
+    if(!selected){
+        document.getElementById("result").innerHTML =
+        "Select an answer first!";
+        return;
+    }
+
+    let ans = selected.value;
+
+    if(ans === quiz[currentQuestion].correctAns){
+        score++;
+        document.getElementById("result").innerHTML = "Correct!";
+    }
+    else{
+        document.getElementById("result").innerHTML =
+        "Wrong! Correct answer is " + quiz[currentQuestion].correctAns;
+    }
+
+    currentQuestion++;
+
+    setTimeout(loadQuestion, 1000);
+}
+
+</script>
+
+</body>
+</html>
